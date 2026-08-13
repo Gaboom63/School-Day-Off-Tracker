@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>School Hype Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main App Window -->
+    <div class="app-container">
+        
+        <!-- View 1: Countdown -->
+        <section id="view-countdown" class="view active">
+            <div class="hype-header">
+                <h2 id="event-title">Loading...</h2>
+                <div class="badge">Up Next</div>
+            </div>
+            
+            <div class="countdown-circle">
+                <span id="days-left">--</span>
+                <span class="label">Days</span>
+            </div>
+            
+            <div id="event-icon" class="pop-icon">🎉</div>
+            <p id="event-date" class="date-text">--</p>
+            
+            <div id="next-up-container" class="faded-next hidden">
+                <p>Following that: <span id="next-up-icon"></span> <span id="next-up-name"></span></p>
+            </div>
+        </section>
+
+        <!-- View 2: Visual Calendar -->
+        <section id="view-calendar" class="view hidden">
+            <div class="view-header">
+                <h2>The Timeline</h2>
+                <p class="subtitle">Tap a day to see the hype & your sleep stats</p>
+            </div>
+            
+            <div class="calendar-wrapper">
+                <!-- NEW: Month Navigation Controls -->
+                <div class="calendar-controls">
+                    <button class="month-btn" onclick="changeMonth(-1)">◀</button>
+                    <h3 id="calendar-month-label">Month Year</h3>
+                    <button class="month-btn" onclick="changeMonth(1)">▶</button>
+                </div>
+
+                <div class="calendar-header">
+                    <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                </div>
+                <div id="calendar-grid" class="calendar-grid">
+                    <!-- JavaScript populates days here -->
+                </div>
+            </div>
+
+            <!-- Details card that pops up when a day is clicked -->
+            <div id="calendar-details-card" class="glass-card details-card hidden">
+                <h3 id="detail-date" class="detail-date">Select a day</h3>
+                <div id="detail-event" class="detail-row">
+                    <span class="detail-icon">📅</span>
+                    <span id="detail-event-text">No special events.</span>
+                </div>
+                <div id="detail-sleep" class="detail-row">
+                    <span class="detail-icon">💤</span>
+                    <span id="detail-sleep-text">No sleep logged.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- View 3: Sleep Tracker -->
+                <section id="view-sleep" class="view hidden">
+                    <div class="view-header">
+                        <h2>Sleep Tracker</h2>
+                        <p class="subtitle">Recharge for the days ahead</p>
+                    </div>
+
+                    <div class="glass-card sleep-input-card">
+                        <p>Hours slept last night?</p>
+                        <div class="input-group">
+                            <input type="number" id="sleep-hours" placeholder="e.g. 8" min="0" max="24" step="0.5">
+                            <button onclick="logSleep()">Save</button>
+                        </div>
+                    </div>
+
+                    <div class="glass-card chart-card">
+                        <div class="donut-chart-container">
+                            <div id="sleep-donut" class="donut-chart">
+                                <div class="donut-hole">
+                                    <span id="donut-text">--h</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 id="sleep-message-title">Awaiting Data</h3>
+                        <p id="sleep-message-body" class="sleep-feedback">Log your sleep to see your stats.</p>
+                        
+                        <!-- NEW: Yesterday Comparison -->
+                        <p id="sleep-comparison" class="sleep-comparison-text hidden"></p>
+
+                        <!-- NEW: Weekly Bar Graph -->
+                        <div class="weekly-graph-container">
+                            <h4>Last 7 Days</h4>
+                            <div id="sleep-bar-graph" class="bar-graph">
+                                <!-- JS injects bars here -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+        <!-- View 4: Settings -->
+                <section id="view-settings" class="view hidden">
+                    <div class="view-header">
+                        <h2>Preferences</h2>
+                        <p class="subtitle">Customize your hype experience</p>
+                    </div>
+
+                    <div class="glass-card settings-card">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <h3>School District</h3>
+                                <p>Which calendar should we track?</p>
+                            </div>
+                            <select id="district-select" onchange="saveSettings()">
+                                <option value="parkway">Parkway</option>
+                                <option value="rockwood">Rockwood</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <h3>App Vibe</h3>
+                                <p>Energetic colors or chill dark mode?</p>
+                            </div>
+                            <select id="theme-select" onchange="saveSettings()">
+                                <option value="vibrant">Vibrant (Light)</option>
+                                <option value="chill">Chill (Dark)</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <h3>Particle Effects</h3>
+                                <p>Turn off snow/animations for better performance.</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="effects-toggle" onchange="saveSettings()">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Floating Navigation Dock (UPDATED) -->
+                <nav class="floating-nav">
+                    <button class="nav-btn active" onclick="switchView('countdown')">
+                        <span class="icon">⏳</span>
+                        <span class="nav-label">Hype</span>
+                    </button>
+                    <button class="nav-btn" onclick="switchView('calendar')">
+                        <span class="icon">📅</span>
+                        <span class="nav-label">Calendar</span>
+                    </button>
+                    <button class="nav-btn" onclick="switchView('sleep')">
+                        <span class="icon">💤</span>
+                        <span class="nav-label">Sleep</span>
+                    </button>
+                    <!-- NEW SETTINGS BUTTON -->
+                    <button class="nav-btn" onclick="switchView('settings')">
+                        <span class="icon">⚙️</span>
+                        <span class="nav-label">Settings</span>
+                    </button>
+                </nav>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
