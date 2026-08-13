@@ -15,14 +15,6 @@ const parkwayEvents = [
         // Animated Backpack
         icon: '<picture><source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1fa8f/512.webp" type="image/webp"><img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1fa8f/512.gif" alt="🪏" width="32" height="32"></picture>'
     }
-
-    // { 
-    //     date: '2027-01-15', 
-    //     name: 'Predicted Snow Day', 
-    //     type: 'snow', 
-    //     // Animated Snowman (Your snippet!)
-    //     icon: '<picture><source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/2603_fe0f/512.webp" type="image/webp"><img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2603_fe0f/512.gif" alt="☃" width="32" height="32"></picture>' 
-    // }
 ];
 
 const rockwoodEvents = [
@@ -425,6 +417,8 @@ function stopSnowEffect() {
 function formatDate(d) {
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
+
+
 
 // Boot up
 initApp();
