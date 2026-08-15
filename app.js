@@ -19,7 +19,7 @@ const parkwayEvents = [
 
 const rockwoodEvents = [
     { 
-        date: '2026-08-25', 
+        date: '2026-08-24', 
         name: 'Rockwood First Day', 
         type: 'early', 
         // Animated Backpack
